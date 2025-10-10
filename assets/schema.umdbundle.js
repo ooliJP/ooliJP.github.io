@@ -24,6 +24,58 @@
 			return { AjvClass: AjvGlobal, addFormats: addFormatsGlobal };
 		}
 
+			// Dynamically ensure Ajv and formats are loaded (fallback to alternate CDNs if blocked)
+			async function ensureAjvLoaded() {
+				const { AjvClass, addFormats } = getAjv();
+				if (AjvClass && addFormats) return { AjvClass, addFormats };
+
+				// Helper to inject a script and wait
+				function loadScript(src) {
+					return new Promise((resolve, reject) => {
+						const s = document.createElement('script');
+						s.src = src;
+						s.async = true;
+						s.onload = () => resolve();
+						s.onerror = () => reject(new Error('Failed to load ' + src));
+						document.head.appendChild(s);
+					});
+				}
+
+				const ajvCandidates = [
+					'https://cdn.jsdelivr.net/npm/ajv@8.17.1/dist/ajv.min.js',
+					'https://unpkg.com/ajv@8.17.1/dist/ajv.min.js',
+					'https://cdnjs.cloudflare.com/ajax/libs/ajv/8.17.1/ajv.min.js'
+				];
+				const formatsCandidates = [
+					'https://cdn.jsdelivr.net/npm/ajv-formats@2.1.1/dist/ajv-formats.min.js',
+					'https://unpkg.com/ajv-formats@2.1.1/dist/ajv-formats.min.js',
+					'https://cdnjs.cloudflare.com/ajax/libs/ajv-formats/2.1.1/ajv-formats.min.js'
+				];
+
+				// Try loading Ajv and formats if missing
+				let loadedAjv = !!AjvClass;
+				let loadedFormats = !!addFormats;
+				if (!loadedAjv) {
+					for (const url of ajvCandidates) {
+						try { await loadScript(url); loadedAjv = true; break; } catch (_) { /* try next */ }
+					}
+				}
+				const AjvAfter = getAjv().AjvClass;
+				if (!AjvAfter) throw new Error('Ajv not found on window. Ensure CDN loaded and not blocked.');
+
+				if (!loadedFormats) {
+					for (const url of formatsCandidates) {
+						try { await loadScript(url); loadedFormats = true; break; } catch (_) { /* try next */ }
+					}
+				}
+				const formatsAfter = getAjv().addFormats;
+				if (!formatsAfter) {
+					// Formats are optional; proceed without, but inform the user
+					console.warn('[Schema] ajv-formats not available; format validations may be skipped.');
+				}
+				return { AjvClass: AjvAfter, addFormats: formatsAfter };
+			}
+
 		function setSummary(text, ok) {
 			summary.textContent = text;
 			summary.classList.remove('validation-ok', 'validation-error');
@@ -58,7 +110,7 @@
 		}).join('\n');
 	}
 
-	function validateNow() {
+		async function validateNow() {
 		output.value = '';
 			summary.classList.remove('validation-ok', 'validation-error');
 			setSummary('Validating…', true);
@@ -73,13 +125,10 @@
 			return;
 		}
 
-			// Build Ajv instance
-			let ajv;
+				// Build Ajv instance
+				let ajv;
 		try {
-				const { AjvClass, addFormats } = getAjv();
-				if (!AjvClass) {
-					throw new Error('Ajv not found on window. Ensure CDN loaded and not blocked.');
-				}
+					const { AjvClass, addFormats } = await ensureAjvLoaded();
 				ajv = new AjvClass({
 				allErrors: true,
 				strict: false, // friendlier for a general-purpose tool

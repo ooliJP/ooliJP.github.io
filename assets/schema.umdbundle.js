@@ -8,24 +8,21 @@
 	const schemaInput = el('schema-input');
 	const output = el('output');
 		const summary = el('validation-summary');
-	const btnValidate = el('btn-validate');
+		const btnValidate = el('btn-validate');
 		const btnLoadSamples = el('btn-load-samples');
 
-		if (!jsonInput || !schemaInput || !output || !summary || !btnValidate) {
-		// If the page structure changes, fail gracefully
-		console.warn('[Schema] Required elements not found.');
-		return;
-	}
+			if (!jsonInput || !schemaInput || !output || !summary) {
+				console.warn('[Schema] Required elements not found.');
+				return;
+			}
 
-	// Resolve Ajv class and ajv-formats function from various UMD globals
-	const AjvClass = (window.ajv && (window.ajv.default || window.ajv.Ajv || window.ajv)) || window.Ajv;
-	const addFormats = (window.ajvFormats && (window.ajvFormats.default || window.ajvFormats)) || null;
-
-	if (!AjvClass) {
-		console.error('[Schema] Ajv not found on window. Make sure the CDN script is loaded before this file.');
-		summary.textContent = 'Error loading validator library (Ajv). Check network and script order.';
-		return;
-	}
+		// Resolver functions for Ajv and formats (evaluate at call time)
+		function getAjv() {
+			// Check multiple possible globals
+			const AjvGlobal = (window.ajv && (window.ajv.default || window.ajv.Ajv || window.ajv)) || window.Ajv || window.ajv8 || window.ajv7;
+			const addFormatsGlobal = (window.ajvFormats && (window.ajvFormats.default || window.ajvFormats)) || window.ajv_formats || window.ajvFormats2 || null;
+			return { AjvClass: AjvGlobal, addFormats: addFormatsGlobal };
+		}
 
 		function setSummary(text, ok) {
 			summary.textContent = text;
@@ -76,17 +73,21 @@
 			return;
 		}
 
-		// Build Ajv instance
-		let ajv;
+			// Build Ajv instance
+			let ajv;
 		try {
-			ajv = new AjvClass({
+				const { AjvClass, addFormats } = getAjv();
+				if (!AjvClass) {
+					throw new Error('Ajv not found on window. Ensure CDN loaded and not blocked.');
+				}
+				ajv = new AjvClass({
 				allErrors: true,
 				strict: false, // friendlier for a general-purpose tool
 				allowUnionTypes: true,
 				$data: true,
 				messages: true,
 			});
-			if (addFormats) addFormats(ajv);
+				if (addFormats) addFormats(ajv);
 		} catch (err) {
 			setSummary('Failed to initialize validator', false);
 			output.value = String(err.message || err);
@@ -112,7 +113,7 @@
 	}
 
 	// Wire up events
-	btnValidate.addEventListener('click', validateNow);
+		if (btnValidate) btnValidate.addEventListener('click', validateNow);
 
 		// Load sample JSON and schema
 		async function loadSamples() {
@@ -136,7 +137,7 @@
 				output.value = String(err.message || err);
 			}
 		}
-		if (btnLoadSamples) btnLoadSamples.addEventListener('click', loadSamples);
+			if (btnLoadSamples) btnLoadSamples.addEventListener('click', loadSamples);
 
 	// Optional: Ctrl/Cmd+Enter triggers validation from either input
 	function maybeShortcut(e) {

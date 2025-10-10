@@ -1,0 +1,10 @@
+{
+  "simple": {
+    "hello": "world",
+    "count": 1,
+    "active": true
+  },
+  "array": [1, 2, 3],
+  "nested": { "a": { "b": 2 } },
+  "base64_gzip_of_json": "H4sIAAAAAAAAA6tWKkktLlGyUjA0MjE1MrUw0FVISSxJVSjPL8pJAQAAAP//AwCddMD3GQAAAA=="
+}

@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Format / Whitespace • JSON Toolkit</title>
+  <link rel="stylesheet" href="assets/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="topbar">
+    <nav class="nav">
+      <a href="index.html" class="btn-lg">Home</a>
+    </nav>
+    <nav class="nav center">
+      <a href="pretty.html" class="active">Format</a>
+      <a href="schema.html">Schema</a>
+      <a href="decode.html">Decode</a>
+    </nav>
+  </header>
+
+  <main class="layout" style="grid-template-columns: 1fr;">
+    <section class="pane">
+      <div class="pane-header">JSON</div>
+      <textarea id="json-input" placeholder="Paste or type JSON here..."></textarea>
+      <div id="validation-summary"></div>
+    </section>
+  </main>
+
+  <footer class="bottombar">
+    <div class="actions actions-lg center">
+      <button id="btn-pretty">Pretty</button>
+      <button id="btn-minify">Minify</button>
+    </div>
+    <span>All local. No data leaves your browser.</span>
+  </footer>
+
+  <script src="assets/pretty.js"></script>
+</body>
+</html>

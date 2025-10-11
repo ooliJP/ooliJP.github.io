@@ -209,8 +209,8 @@
 			setSummary('Loading samples…', true);
 			try {
 				const [jsonResp, schemaResp] = await Promise.all([
-					fetch('samples.json'),
-					fetch('schema-sample.json')
+					fetch('/samples.json'),
+					fetch('/schema-sample.json')
 				]);
 				if (!jsonResp.ok) throw new Error('Failed to fetch samples.json');
 				if (!schemaResp.ok) throw new Error('Failed to fetch schema-sample.json');

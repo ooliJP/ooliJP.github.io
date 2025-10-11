@@ -63,15 +63,52 @@
 						try { await loadScript(url); loadedAjv = true; break; } catch (_) { /* try next */ }
 					}
 				}
-				const AjvAfter = getAjv().AjvClass;
-				if (!AjvAfter) throw new Error('Ajv not available. If running offline or behind a blocker, add ajv.min.js to assets/vendor or allow CDN.');
+				let AjvAfter = getAjv().AjvClass;
+				if (!AjvAfter) {
+					// Try dynamic ESM imports (works even without globals)
+					async function tryImport(urls, pick) {
+						for (const u of urls) {
+							try {
+								const m = await import(/* @vite-ignore */ u);
+								const v = pick(m);
+								if (v) return v;
+							} catch (_) { /* try next */ }
+						}
+						return null;
+					}
+
+					const ajvEsmCandidates = [
+						'https://esm.sh/ajv@8?bundle',
+						'https://cdn.skypack.dev/ajv@8',
+						'https://esm.run/ajv@8'
+					];
+					AjvAfter = await tryImport(ajvEsmCandidates, m => m.default || m.Ajv || m);
+				}
+				if (!AjvAfter) throw new Error('Ajv not available. If running offline or behind a blocker, ensure a local ESM/UMD build is available or allow CDN.');
 
 				if (!loadedFormats) {
 					for (const url of formatsCandidates) {
 						try { await loadScript(url); loadedFormats = true; break; } catch (_) { /* try next */ }
 					}
 				}
-				const formatsAfter = getAjv().addFormats;
+				let formatsAfter = getAjv().addFormats;
+				if (!formatsAfter) {
+					// Try dynamic import for ajv-formats as ESM
+					const formatsEsmCandidates = [
+						'https://esm.sh/ajv-formats@2?bundle',
+						'https://cdn.skypack.dev/ajv-formats@2',
+						'https://esm.run/ajv-formats@2'
+					];
+					try {
+						const mod = await (async () => {
+							for (const u of formatsEsmCandidates) {
+								try { return await import(u); } catch (_) { /* try next */ }
+							}
+							return null;
+						})();
+						if (mod) formatsAfter = mod.default || mod.addFormats || mod;
+					} catch (_) { /* ignore */ }
+				}
 				if (!formatsAfter) {
 					// Formats are optional; proceed without, but inform the user
 					console.warn('[Schema] ajv-formats not available; format validations may be skipped.');

@@ -43,9 +43,9 @@
     </div>
   </footer>
 
-  <!-- Prefer local vendor copies to avoid CDN issues; schema.umdbundle.js can still fallback to CDNs if needed -->
-  <script src="assets/vendor/ajv.min.js"></script>
-  <script src="assets/vendor/ajv-formats.min.js"></script>
+  <!-- Prefer local vendor copies; if absent, the runtime will try ESM/CDN fallbacks -->
+  <script src="assets/vendor/ajv.js" defer></script>
+  <script src="assets/vendor/ajv-formats.js" defer></script>
   <script src="assets/schema.umdbundle.js"></script>
 </body>
 </html>

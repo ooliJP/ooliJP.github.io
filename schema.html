@@ -43,8 +43,9 @@
     </div>
   </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/ajv@8.17.1/dist/ajv.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/ajv-formats@2.1.1/dist/ajv-formats.min.js"></script>
+  <!-- Prefer local vendor copies to avoid CDN issues; schema.umdbundle.js can still fallback to CDNs if needed -->
+  <script src="assets/vendor/ajv.min.js"></script>
+  <script src="assets/vendor/ajv-formats.min.js"></script>
   <script src="assets/schema.umdbundle.js"></script>
 </body>
 </html>

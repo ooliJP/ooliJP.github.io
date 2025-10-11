@@ -42,11 +42,14 @@
 				}
 
 				const ajvCandidates = [
+					// Prefer local vendored copies if present
+					'assets/vendor/ajv.min.js',
 					'https://cdn.jsdelivr.net/npm/ajv@8.17.1/dist/ajv.min.js',
 					'https://unpkg.com/ajv@8.17.1/dist/ajv.min.js',
 					'https://cdnjs.cloudflare.com/ajax/libs/ajv/8.17.1/ajv.min.js'
 				];
 				const formatsCandidates = [
+					'assets/vendor/ajv-formats.min.js',
 					'https://cdn.jsdelivr.net/npm/ajv-formats@2.1.1/dist/ajv-formats.min.js',
 					'https://unpkg.com/ajv-formats@2.1.1/dist/ajv-formats.min.js',
 					'https://cdnjs.cloudflare.com/ajax/libs/ajv-formats/2.1.1/ajv-formats.min.js'
@@ -61,7 +64,7 @@
 					}
 				}
 				const AjvAfter = getAjv().AjvClass;
-				if (!AjvAfter) throw new Error('Ajv not found on window. Ensure CDN loaded and not blocked.');
+				if (!AjvAfter) throw new Error('Ajv not available. If running offline or behind a blocker, add ajv.min.js to assets/vendor or allow CDN.');
 
 				if (!loadedFormats) {
 					for (const url of formatsCandidates) {

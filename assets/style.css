@@ -30,6 +30,10 @@ body { margin: 0; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto
 .brand { display: inline-flex; align-items: center; gap: .5rem; text-decoration: none; color: inherit; font-weight: 700; }
 .brand img { width: 28px; height: 28px; display: block; border-radius: 6px; }
 .brand .title { font-size: 1.05rem; }
+
+/* Small logo next to Home button */
+.home-link { display: inline-flex; align-items: center; gap: .45rem; }
+.home-link .home-logo { width: 18px; height: 18px; display: inline-block; border-radius: 4px; vertical-align: middle; }
 .actions { display: flex; gap: .5rem; flex-wrap: wrap; }
 .nav { display: flex; gap: .6rem; flex-wrap: wrap; }
 .nav.center { margin: 0 auto; }

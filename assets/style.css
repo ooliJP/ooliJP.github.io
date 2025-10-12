@@ -75,7 +75,7 @@ button.primary:hover { background: var(--accent-600); }
 .icon-btn { padding: .35rem .5rem; font-size: 1.1rem; line-height: 1; border-radius: 10px; }
 
 .layout { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; padding: 12px; min-height: 0; }
-.pane { display: flex; flex-direction: column; background: var(--panel); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; max-height: 78vh; }
+.pane { display: flex; flex-direction: column; background: var(--panel); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; min-height: 66vh; max-height: 78vh; }
 .pane-header { padding: .6rem .8rem; font-weight: 600; border-bottom: 1px solid var(--border); background: #f8fafc; }
 [data-theme="dark"] .pane-header { background: #0f172a; }
 textarea { width: 100%; flex: 1 1 auto; border: none; resize: none; padding: .8rem; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size: .9rem; line-height: 1.4; background: #fff; overflow: auto; }
@@ -130,5 +130,16 @@ body:has(.landing) .card { min-height: 110px; }
 /* Center footer actions */
 .bottombar { justify-content: center; }
 
-/* Subtle bottom note on home page */
-.landing-note { text-align: center; color: var(--muted); font-size: .9rem; padding: 8px 0 14px; }
+/* Subtle bottom note on home page - pin to bottom */
+.landing-note {
+  position: fixed;
+  left: 50%;
+  bottom: 8px;
+  transform: translateX(-50%);
+  text-align: center;
+  color: var(--muted);
+  font-size: .9rem;
+  padding: 4px 8px;
+  z-index: 10;
+  pointer-events: none;
+}

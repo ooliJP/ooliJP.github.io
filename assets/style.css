@@ -2,6 +2,8 @@
 * { box-sizing: border-box; }
 html, body { height: 100%; }
 body { margin: 0; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; color: #0f172a; background: #f8fafc; display: grid; grid-template-rows: auto 1fr auto; }
+/* Dark theme: ensure readable text color */
+[data-theme="dark"] body { color: #e5e7eb; background: var(--bg); }
 /* Use theme variable for background */
 body { background: var(--bg); }
 
@@ -31,6 +33,9 @@ body { background: var(--bg); }
   gap: 1rem; padding: .75rem 1rem; border-bottom: 1px solid var(--border);
   background: var(--panel);
 }
+/* Center the middle nav absolutely so it stays centered regardless of left/right controls */
+.topbar { position: relative; }
+.topbar .nav.center { position: absolute; left: 50%; transform: translateX(-50%); }
 /* Make bottom bar minimal/transparent so no white box appears */
 .bottombar {
   border-top: none;
@@ -70,7 +75,7 @@ button.primary:hover { background: var(--accent-600); }
 .icon-btn { padding: .35rem .5rem; font-size: 1.1rem; line-height: 1; border-radius: 10px; }
 
 .layout { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; padding: 12px; min-height: 0; }
-.pane { display: flex; flex-direction: column; background: var(--panel); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+.pane { display: flex; flex-direction: column; background: var(--panel); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; max-height: 72vh; }
 .pane-header { padding: .6rem .8rem; font-weight: 600; border-bottom: 1px solid var(--border); background: #f8fafc; }
 [data-theme="dark"] .pane-header { background: #0f172a; }
 textarea { width: 100%; flex: 1 1 auto; border: none; resize: none; padding: .8rem; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size: .9rem; line-height: 1.4; background: #fff; overflow: auto; }
@@ -82,7 +87,7 @@ textarea:focus { outline: none; }
 
 @media (max-width: 1100px) {
   .layout { grid-template-columns: 1fr; height: auto; }
-  .pane { min-height: 260px; }
+  .pane { min-height: 220px; }
 }
 
 /* Status styles */
@@ -97,6 +102,8 @@ textarea:focus { outline: none; }
 [data-theme="dark"] .card:hover { background: #0f172a; }
 .card h2 { margin: 0 0 .25rem 0; font-size: 1.1rem; }
 .card p { margin: 0; color: var(--muted); }
+[data-theme="dark"] .card h2 { color: #e5e7eb; }
+[data-theme="dark"] .card p { color: #94a3b8; }
 
 /* Tiny examples on landing cards */
 .mini-example {

@@ -9,6 +9,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="description" content="Validate JSON against a JSON Schema (draft 2020‑12/2019‑09/07). See detailed errors instantly in your browser." />
+  <meta name="keywords" content="JSON Schema validator, validate JSON, schema validation, ajv, json validation online" />
 </head>
 <body>
   <header class="topbar">
@@ -20,6 +22,8 @@
       <a href="/schema/" class="active">Schema</a>
       <a href="/decode/">Decode</a>
     </nav>
+    <div class="spacer"></div>
+    <button id="theme-toggle" class="icon-btn" title="Toggle theme">🌙</button>
   </header>
 
   <main class="layout">
@@ -44,6 +48,7 @@
     </div>
   </footer>
 
+  <script src="/assets/theme.js"></script>
   <script src="/assets/vendor/ajv.js" defer></script>
   <script src="/assets/vendor/ajv-formats.js" defer></script>
   <script src="/assets/schema.umdbundle.js"></script>

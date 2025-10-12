@@ -9,6 +9,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="description" content="Format and minify JSON instantly. Pretty‑print or remove whitespace from your JSON in the browser." />
+  <meta name="keywords" content="format JSON, pretty print JSON, minify JSON, JSON beautifier, JSON formatter online" />
 </head>
 <body>
   <header class="topbar">
@@ -20,6 +22,8 @@
       <a href="/schema/">Schema</a>
       <a href="/decode/">Decode</a>
     </nav>
+    <div class="spacer"></div>
+    <button id="theme-toggle" class="icon-btn" title="Toggle theme">🌙</button>
   </header>
 
   <main class="layout" style="grid-template-columns: 1fr;">
@@ -37,6 +41,7 @@
     </div>
   </footer>
 
+  <script src="/assets/theme.js"></script>
   <script src="/assets/pretty.js"></script>
 </body>
 </html>

@@ -92,5 +92,5 @@
   });
 
   // Seed example
-  if (!jsonInput.value.trim()) jsonInput.value = "{'hello':'world', count:1}";
+  if (!jsonInput.value.trim()) jsonInput.value = "{'hello':'world'}";
 })();

@@ -129,7 +129,15 @@ body:has(.landing) .card { min-height: 110px; }
 
 /* Enlarge single JSON editor on format page without overlapping footer */
 body:has(#json-input) #json-input {
-  min-height: 62vh; /* modest increase; leaves room for footer buttons */
+  min-height: 62vh; /* baseline height */
+  resize: vertical; /* allow user to drag height */
+  flex: none; /* allow manual height without flex interference */
+  padding-bottom: 1.2rem; /* space above grip */
+  /* Diagonal grip indicator bottom-right */
+  background:
+    linear-gradient(135deg, transparent 46%, var(--border) 46%, var(--border) 54%, transparent 54%) bottom right / 18px 18px no-repeat,
+    #fff;
+  cursor: ns-resize;
 }
 
 /* Center footer actions */

@@ -3,14 +3,14 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Decode / Unzip • JSON Toolkit</title>
+  <title>Compare / Diff • JSON Toolkit</title>
   <link rel="icon" type="image/png" href="/logo.png" />
   <link rel="stylesheet" href="/assets/style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <meta name="description" content="Decode Base64 and unzip data (gzip/deflate/zip) into readable text—all locally in your browser." />
-  <meta name="keywords" content="Base64 decode, gzip decompress, deflate, unzip, decode JSON, json decode online" />
+  <meta name="description" content="Compare two JSON or text blobs and see highlighted differences side-by-side." />
+  <meta name="keywords" content="diff JSON, compare text, JSON diff, text comparison" />
 </head>
 <body>
   <header class="topbar">
@@ -20,8 +20,8 @@
     <nav class="nav center">
       <a href="/format/">Format</a>
       <a href="/schema/">Schema</a>
-      <a href="/decode/" class="active">Decode</a>
-      <a href="/compare/">Compare</a>
+      <a href="/decode/">Decode</a>
+      <a href="/compare/" class="active">Compare</a>
     </nav>
     <div class="spacer"></div>
     <button id="theme-toggle" class="icon-btn" title="Toggle theme">🌙</button>
@@ -29,26 +29,25 @@
 
   <main class="layout" style="grid-template-columns: 1fr 1fr;">
     <section class="pane">
-      <div class="pane-header">Original (unchanged)</div>
-      <textarea id="original" placeholder="Paste Base64/encoded or zipped text here..."></textarea>
+      <div class="pane-header">Text A</div>
+      <textarea id="text-a" class="resizable" placeholder="Paste first JSON or text here..."></textarea>
     </section>
     <section class="pane">
-      <div class="pane-header">Decoded / Decompressed (output)</div>
-      <textarea id="decoded" placeholder="Output appears here..." readonly></textarea>
-      <div id="validation-summary"></div>
+      <div class="pane-header">Text B</div>
+      <textarea id="text-b" class="resizable" placeholder="Paste second JSON or text here..."></textarea>
+      <div id="compare-summary"></div>
     </section>
   </main>
 
   <footer class="bottombar">
     <div class="actions actions-lg center">
-      <button id="btn-base64">Base64 Decode</button>
-      <button id="btn-decompress" class="primary">Decompress</button>
+      <button id="btn-compare" class="primary">Compare</button>
+      <button id="btn-swap">Swap</button>
+      <button id="btn-clear">Clear</button>
     </div>
   </footer>
 
   <script src="/assets/theme.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/pako@2.1.0/dist/pako.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
-  <script src="/assets/decode.js"></script>
+  <script src="/assets/compare.js"></script>
 </body>
 </html>

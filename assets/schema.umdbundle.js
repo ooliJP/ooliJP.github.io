@@ -166,7 +166,7 @@
 		}
 
 				// Build Ajv instance
-				let ajv;
+					let ajv;
 		try {
 					const { AjvClass, addFormats } = await ensureAjvLoaded();
 				ajv = new AjvClass({
@@ -177,6 +177,21 @@
 				messages: true,
 			});
 				if (addFormats) addFormats(ajv);
+
+					// Ensure meta-schema for $schema reference if needed
+					try {
+						const schemaUrl = schema.$schema;
+						if (schemaUrl && typeof schemaUrl === 'string') {
+							const known = ajv.getSchema(schemaUrl);
+							if (!known) {
+								// Fetch meta-schema (only once per URL) and add
+									const meta = await fetch(schemaUrl).then(r => r.ok ? r.json() : Promise.reject(new Error('Failed to fetch meta-schema: ' + schemaUrl + ' status ' + r.status)));
+									ajv.addMetaSchema(meta, schemaUrl);
+								}
+						}
+					} catch (metaErr) {
+						console.warn('[Schema] Meta-schema load warning:', metaErr);
+					}
 		} catch (err) {
 			setSummary('Failed to initialize validator', false);
 			output.value = String(err.message || err);

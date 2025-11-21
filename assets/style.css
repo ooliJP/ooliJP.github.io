@@ -94,7 +94,7 @@ textarea:focus { outline: none; }
 /* Status styles */
 .validation-ok { color: #166534; }
 .validation-error { color: var(--danger); }
-.validation-ok.identical { color: #166534; }
+.validation-ok.bright-identical { color: #166534; font-weight: 600; background: rgba(34,197,94,0.18); padding: 2px 6px; border-radius: 6px; display: inline-block; }
 
 /* Diff view overlay */
 .diff-overlay {
@@ -113,8 +113,10 @@ textarea:focus { outline: none; }
 .diff-gap { background: repeating-linear-gradient(45deg, rgba(100,116,139,.15), rgba(100,116,139,.15) 6px, transparent 6px, transparent 12px); min-height: 1.4em; }
 .diff-add { background: rgba(34,197,94,.15); border-left: 3px solid rgba(34,197,94,.5); }
 .diff-rem { background: rgba(239,68,68,.18); border-left: 3px solid rgba(239,68,68,.55); }
+.diff-changed { background: rgba(234,179,8,.18); border-left: 3px solid rgba(234,179,8,.55); }
 .diff-add-token { background: rgba(34,197,94,.35); border-radius: 2px; padding:0 1px; }
 .diff-rem-token { background: rgba(239,68,68,.4); border-radius: 2px; padding:0 1px; }
+[data-theme="dark"] .diff-changed { background: rgba(234,179,8,.28); }
 [data-theme="dark"] .diff-add { background: rgba(34,197,94,.25); }
 [data-theme="dark"] .diff-rem { background: rgba(239,68,68,.3); }
 [data-theme="dark"] .diff-gap { background: repeating-linear-gradient(45deg, rgba(148,163,184,.18), rgba(148,163,184,.18) 6px, transparent 6px, transparent 12px); }

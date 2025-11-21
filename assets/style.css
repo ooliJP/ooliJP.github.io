@@ -78,9 +78,10 @@ button.primary:hover { background: var(--accent-600); }
 .pane { display: flex; flex-direction: column; background: var(--panel); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; min-height: 66vh; max-height: 78vh; }
 .pane-header { padding: .6rem .8rem; font-weight: 600; border-bottom: 1px solid var(--border); background: #f8fafc; }
 [data-theme="dark"] .pane-header { background: #0f172a; }
-textarea { width: 100%; flex: 1 1 auto; border: none; resize: none; padding: .8rem; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size: .9rem; line-height: 1.4; background: #fff; overflow: auto; }
+textarea { width: 100%; flex: 1 1 auto; border: none; resize: none; padding: .8rem; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size: .9rem; line-height: 1.4; background: var(--panel); color: inherit; overflow: auto; transition: background-color .2s ease, color .2s ease; }
 textarea:focus { outline: none; }
-[data-theme="dark"] textarea { background: #111827; color: #e5e7eb; }
+/* Dark theme inherits panel variable; ensure text color readable */
+[data-theme="dark"] textarea { color: #e5e7eb; }
 #validation-summary { padding: .6rem .8rem; border-top: 1px solid var(--border); color: var(--muted); font-size: .9rem; min-height: 44px; }
 /* Hide the summary area if empty to reduce extra white space */
 #validation-summary:empty { display: none; }
@@ -128,17 +129,21 @@ body:has(.landing) .landing { max-width: 1100px; margin: 0 auto; }
 body:has(.landing) .card { min-height: 110px; }
 
 /* Enlarge single JSON editor on format page without overlapping footer */
-body:has(#json-input) #json-input {
-  min-height: 62vh; /* baseline height */
-  resize: vertical; /* allow user to drag height */
-  flex: none; /* allow manual height without flex interference */
-  padding-bottom: 1.2rem; /* space above grip */
-  /* Diagonal grip indicator bottom-right */
-  background:
-    linear-gradient(135deg, transparent 46%, var(--border) 46%, var(--border) 54%, transparent 54%) bottom right / 18px 18px no-repeat,
-    #fff;
+/* Resizable editor only where explicitly marked */
+textarea.resizable {
+  min-height: 62vh;
+  resize: vertical;
+  flex: none;
+  padding-bottom: 1.2rem;
+  background-color: var(--panel);
+  background-image: linear-gradient(135deg, transparent 46%, var(--border) 46%, var(--border) 54%, transparent 54%);
+  background-repeat: no-repeat;
+  background-position: bottom right;
+  background-size: 18px 18px;
   cursor: ns-resize;
 }
+/* In dark theme grip should use border color (already via var(--border)) */
+[data-theme="dark"] textarea.resizable { background-color: var(--panel); }
 
 /* Center footer actions */
 .bottombar { justify-content: center; }
